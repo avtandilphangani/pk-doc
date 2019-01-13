@@ -18,7 +18,11 @@
 
 **შენიშვნა** The [completed example](https://github.com/pagekit/example-todo) is available on Github.
 
+<<<<<<< HEAD
 ## ნაბიჯი 1: Extending Pagekit using Modules
+=======
+## Step! 1: Extending Pagekit using Modules
+>>>>>>> 5f35c7c2d2753bcc6d8048a0b073409bae483d79
 
 <p class="uk-article-lead">As a developer, you can easily extend what Pagekit already offers. Whether you want a custom theme or an extension for additional functionality, both are built following the same approach. In this first step we will introduce what a *package* and what a *module* is - both central concepts of Pagekit.</p>
 
