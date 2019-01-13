@@ -1,21 +1,22 @@
 
-# How to develop a Pagekit extension
+# როგორ დავაპროგრამოთ Pagekit-ის გაფართოება
 
-<p class="uk-article-lead">This tutorial follows all steps needed to setup and develop a full extension to manage Todo items in the admin area of Pagekit. You will learn about basic extension concepts, controllers, routing, view rendering and the Vue.js framework.</p>
 
-## Content
+<p class="uk-article-lead">ამ სახელმძღვანელოში აღწერილია ყველა ნაბიჯი, რომელიც საჭიროა სრულყოფიფი ToDo გაფართოების შესამუშავებლად და მოსაწყობად Pagekit-ის ადმინ განყოფილებაში. მოცემულია ძირითადი ცნებები გაფართოების, კონტროლერების, მარშუტიზაციის, წარმოდგენების რენდერინგის და Вы узнаете об основных понятиях расширений, контроллерах, маршрутизации, рендеринге представлений и инфраструктуре Vue.js სამუშაო გარემოსი.</p>
+
+## შინაარსი
 
 <ol>
-<li><a href="#step-1-extending-pagekit-using-modules">Extending Pagekit using Modules</a></li>
-<li><a href="#step-2-routing-and-controller">Routing and Controller</a></li>
-<li><a href="#step-3-view-rendering-and-module-config">View rendering and module config</a></li>
-<li><a href="#step-4-using-vue-js-in-a-pagekit-extension">Using Vue.js in a Pagekit extension</a></li>
-<li><a href="#the-completed-example">The completed example</a></li>
+<li><a href="#step-1-extending-pagekit-using-modules">Pagekit-ის გაფართოება მოდულების საშუალებით</a></li>
+<li><a href="#step-2-routing-and-controller">მარშუტიზაცია და კონტროლერები</a></li>
+<li><a href="#step-3-view-rendering-and-module-config">წარმოდგენების რენტერინგიდა მოდულის კონფიგურაცია</a></li>
+<li><a href="#step-4-using-vue-js-in-a-pagekit-extension"> Vue.js-ს გამოყენება Pagekit-ის გაფართოებაში</a></li>
+<li><a href="#the-completed-example">დასრულებული მაგალითი</a></li>
 </ol>
 
-If you prefer video instead of text, check out the [Youtube playlist with all screencasts](https://www.youtube.com/playlist?list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto) included in this tutorial.
+ინგლისურ ენაზე ხელმისაწვდომია აგრეთვე ვიეოების სერია [Youtube playlist with all screencasts](https://www.youtube.com/playlist?list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto).
 
-**Note** The [completed example](https://github.com/pagekit/example-todo) is available on Github.
+**შენიშვნა** The [completed example](https://github.com/pagekit/example-todo) is available on Github.
 
 ## Step 1: Extending Pagekit using Modules
 
