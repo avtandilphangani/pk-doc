@@ -16,26 +16,25 @@
 
 ინგლისურ ენაზე ხელმისაწვდომია აგრეთვე ვიეოების სერია [Youtube playlist with all screencasts](https://www.youtube.com/playlist?list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto).
 
-**შენიშვნა** The [completed example](https://github.com/pagekit/example-todo) is available on Github.
+**შენიშვნა** Github-ზე არის [დასრულებული მაგალითი](https://github.com/pagekit/example-todo).
 
-## ნაბიჯი 1: Extending Pagekit using Modules
+## ნაბიჯი 1: Pagekit-ის გაფართოება მოლულების გამოყნენებით
 
 
-<p class="uk-article-lead">As a developer, you can easily extend what Pagekit already offers. Whether you want a custom theme or an extension for additional functionality, both are built following the same approach. In this first step we will introduce what a *package* and what a *module* is - both central concepts of Pagekit.</p>
+<p class="uk-article-lead">როგორც პროგრამისტმა, ადვილად შეიძლება იმ შესაძლებლობების გაფართოება, რასაც  Pagekit გვთავაზობს დასაწყისში. იმისდამიუხედავად, რა გვინდა, შევქმნათ საკუთარი თემა ან დამატებითი ფუნქციონალობის გაფართოება, ორივე აგებული იქნება ერთი და იგივე მიდგომით. ამ პირველ ეტაპზე წარმოვიდგენთ რა არის *პაკეტი(package)* და რა არის *მოდული(Module)* - ორივე დაფუძნებულია Pagekit-ის კონცეფციაზე.</p>
 
-<a href="https://www.youtube.com/watch?v=m6ntYDOCG4s&index=1&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">Watch this step as a video</a>
+<a href="https://www.youtube.com/watch?v=m6ntYDOCG4s&index=1&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">იხ( ამ ნაბიჯის ვიდეო</a>
 
-### Terminology: Packages and modules
+### ტერმინოლოგია: პაკეტი და მოდული
+თემა და გაფართოება გარეგნულად შესაძლოა მოგვეჩვენოს განსხვავებულად, მაგრამ ორივეს ჩვენ ვუწოდებთ *პაკეტს*. პაკეტი - ეს არის პაპკა, რომელშიც გაერთიანებულია რამდენიმე ფაილი და შეიცავს მეტა-მონაცემებს ფაილში სახელით `composer.json`.
 
-Themes and extension might seem different from the outside, but they are both something we call a *package*. A package is just a folder that bundles a number of files and contains meta data in a file called `composer.json`.
+იმისათვის, რომ რამე დავარეგისტრიროთ Pagekit-ის სისტემაში, აგრეთვე საჭიროა ჩავრთოთ ფაილი სახელით - `index.php`. ის შეიცავს იმის განსაზღვრებას, რასაც ჩვენ ვუწოდებთ *მოდულს*. მოდული წარმოადგენს ყველაზე უფრო მნიშვნელოვან სტრუქტურას Pagekit-ის კოდში. მოდულები თავის მხრივ წარმოადგენენ ავტონომიურ მოდულებს, რომელებიც აერთიანებენ ფუნქციონალურ შესაძლებლობებს და ერთიანდებიან ერთიან სისტემაში. მოდულები გამოიყენება, როგორც Pagekit-ის ბირთვში, ასევე მესამე მხარის მიერ შემუშავებულ გაფართოებაში.
 
-To register anything with the Pagekit system, you also include a file called `index.php`. It contains the definition for something we call a *module*. A module is the most important building unit in the Pagekit code. Modules are self contained units that bundle functionality and are combined to form the whole system. Modules are used both in the Pagekit core and in any third party extensions.
+### სად უნდა განვათავსოთ ჩვენი საკუთარი პაკეტის ფაილები
 
-### Where to put your package files
+ყოველი პაკეტი ეკუთვნის ავტორის მიერ განსაზღვრულ სახელს, რაც უფრო გასაგები გახდება, თუ შევხედავთ ახლად დაყენებული Pagekit-ის ფაილების წყობას.
 
-Every package belongs to a specific vendor name, which becomes clear when you look at the directory structure of a fresh Pagekit installation.
-
-Core packages are part of the `pagekit` namespace and located in the appropriate subdirectory inside `/packages`. Any third party packages (yours!) will have their own vendor name and therefore sit in a separate subfolder.
+საბაზო პაკეტები არიან Базовые пакеты являются частью пространства имен `pagekit` სახელების სივრცის ნაწილი და განთავსებული არიან კვეკატალოგში სახელად ` / packages`. ყველა მხარის პაკეტები (ჩვენი) ფლობენ საკუთარ სახელთა სივრცეს და შესაბამისად განთავსებული არიან ცალკე ქვეკადალოგში.
 
 ```
 /packages
@@ -47,11 +46,11 @@ Core packages are part of the `pagekit` namespace and located in the appropriate
         /your-extension
 ```
 
-In every package you will find at least 2 files: `composer.json` and `index.php`.
+ნებისმიერ პაკეტში არის მინიმუმ 2 ფაილი : `composer.json` და `index.php`.
 
-### 1. composer.json: The package meta data
+### 1. composer.json: პაკეტის მეტა-მონაცემები
 
-The `composer.json` contains meta data for the package. This displays in the Pagekit backend and is used if you upload your extension to the Pagekit marketplace.
+`composer.json` ფაილი შეიცავს პაკეტის მეტა-მონაცემებს. ეს მონაცემები აისახება Pagekit-ის ბექენდში და გამოიყენება Pagekit marketplace-ში, თუ ეს პაკეტი აიტვირთება იქ.
 
 `packages/pagekit/todo/composer.json`
 
@@ -64,9 +63,9 @@ The `composer.json` contains meta data for the package. This displays in the Pag
 }
 ```
 
-### 2. index.php: The module definition
+### 2. index.php: მოდულის განსაზღვრა
 
-Modules bundle functionality inside Pagekit and are the way for you to hook into the Pagekit system. From a code perspective, the module definition is a PHP array that has certain properties set. The `index.php` always has to `return` a valid array.
+მოდულები კრავენ ფუნქციონალს Pagekit-ის შიგნით და საშუალებას გვაძლევენ ჩავერთოთ Pagekit სისტემაში. კოდის თვალსაზრისით, მოდულის განსაღვრება - ეს არის PHP მასივი, რომლისათვის იწერება განსაზღვრული თვისებებიдля. `Index.php`-მ ყოველთვის უნდა `დააბრუნოს` ნამდვილი მასივი.
 
 ```
 <?php
@@ -90,11 +89,11 @@ return [
 ?>
 ```
 
-In order to test the functionality, make sure you enable the extension in the backend. When it is active you will see the printed output at the top of your screen.
+რომ შევამოწმოთ, როგორ მუშაობს, გაფართოება ჩართული უნდა იყოს ბექენდში. როცა ის აქტიურია (მწვანე ), წარწერა (It's alive) დაიბეჭდება ეკრანის მაღლითა ნაწილში.
 
-This minimal example shows how small a fully functional module can be. It has access to the `Application` instance.  With this object you can access all services, trigger events and listen to events triggered by other modules.
+ეს მინიმალური მაგალითი გვიჩვენებს, თუ როგორი პატარა შეიძლება იყოს მთლიანად ფუნქციონირებადი მოდული. მას აქვს დაშვება `Application` ეგზაპლიართან. ამ ობიექტის დახმარებით შესაძლებელია მივიღოთ დაშვებანებისმიერ სერვისთან, გამოვიძახოთ მოვლენა ან მოვუსმინოთ სხვა მოდულების მიერ გამოძახებულ მოლენას.
 
-## Step 2: Routing and Controller
+## ნაბიჯი 2: მარშუტიზაცია და კონტროლერი
 
 <p class="uk-article-lead">With the basic structure of an extension set up, a common task is to register your own controllers and add menu items to the admin area. For that, we will look at some additional properties that you can add to the module definition in your `index.php`.</p>
 
