@@ -80,9 +80,9 @@ return [
 
     'type' => 'extension',
 
-	// called when Pagekit initializes the module
+	// გამოიძახება როცა Pagekit გააკეთებს მოდულის ინიციალიზაციას
     'main' => function (Application $app) {
-        echo "It's alive";
+        echo "ის ცოცხალია";
     }
 ];
 
@@ -95,16 +95,17 @@ return [
 
 ## ნაბიჯი 2: მარშუტიზაცია და კონტროლერი
 
-<p class="uk-article-lead">With the basic structure of an extension set up, a common task is to register your own controllers and add menu items to the admin area. For that, we will look at some additional properties that you can add to the module definition in your `index.php`.</p>
+<p class="uk-article-lead">მას მერე, რაც გაფართოების საბაზო სტრუქტურა დაწყობილია, ჩვეულებრივი ამოცანა ხდება ჩვენი საკუთარი კონტროლერების რეგისტრაცია და ადმინ პანელში მენიუს პუნქტების დამატება, ამისათვის განვიხილავთ რამდენიმე დამატებით თვისებას, რომელიც შესაძლებელია დაემატოს მოდულის განსაზღვრებას  `index.php` ფაილში.</p>
 
-<a href="https://www.youtube.com/watch?v=Hi7WGVSI3aw&index=2&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">Watch this step as a video</a>
+<a href="https://www.youtube.com/watch?v=Hi7WGVSI3aw&index=2&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">ნახეთ ამ ნაბიჯის ვიდეო</a>
 
-### Adding a controller
+### კონტროლერის დამატება
 
-A controller in Pagekit is just a plain PHP class. Every public method named properly (i.e. `someAction()`) will be mounted by Pagekit's routing (i.e. `/todo/some`).
+Pagekit-ის კონტროლერი - ეს არის PHP-ის მარტივი კლასი. ნებისმიერი, სწორ სახელიანი ( ასეთი სახის `რამეAction ()`), მონტირდება Pagekit-ის მარშუტიზაციით (ანუ `/ todo / რამე`)
 
-Create a file `packages/pagekit/todo/src/Controller/TodoController.php` with the following code.
+სწორი სახელისთვი, რა თქმა უნდა ვიყენებთ ლათინურ ასოებს (ა. ფ.)
 
+შევქმნათ ფაილი `packages / pagekit / todo / src / Controller / TodoController.php` შემდეგი კოდით შიგ.
 ```
 <?php
 
@@ -118,20 +119,21 @@ class TodoController
 
     public function indexAction()
     {
-       return "Yay.";
+       return "ჰეი.";
     }
 
 }
 ```
 
-To limit the access to the admin area and mount this controller to an admin url, we use the annotation `@Access(admin=true)`. Annotations are keywords which are placed in the comment block above a class or method. Learn [more about annotations](http://pagekit.com/docs/developer/routing#annotations).
+იმისათვის, რომ დავუშვათ მხოლოდ ადმინისტრატორის წვდომა და მივუერთოთ  ეს კონტროლერი ადინისტრატორის URL-მისამართს უნდა გამოვიყენოთ ანოტაცია `@Access (admin = true)`. ანოტაციები - ეს არის გასაღები ტერმინები, რომელებიც თავსდებიან კლასის ან მეთოდის დასაწყისში მოყვანილ გომენტარის ბლოკში. მეტი [ანოტაციების შესახებ] (http://pagekit.com/docs/developer/routing#annotations) წაიკითხეთ ამ ბმულზე.
 
-To use this controller, we need to autoload our namespace and mount the controller to a route. Add the following properties to the configuration array in your `index.php`.
+იმისათვის, რომ შევძლოთ ამ კონტროლერის გამოყენება, საჭიროა ავტომატურად ჩავტვირთოთ ჩვენი სახელების სივრცე და მივუერთოთ კონტროლერი მარშუტს. დავამატოთ შემდეგი თვისება index.php ფაილის კონფიგურაციის მასივში.
+
 
 ```
 	// ...
 
-	// array of namespaces to autoload from given folders
+	// სახელობითი სივრცეთა მასივი რომელიც ავტომატურად იტვირთება მოცემული პაპკიდან
 	'autoload' => [
         'Pagekit\\Example\\' => 'src'
     ],
@@ -140,13 +142,13 @@ To use this controller, we need to autoload our namespace and mount the controll
 	// array of routes
     'routes' => [
 
-    	// identifier to reference the route from your code
+    	// მარშუტის ბმულის იდენტიფიკატორი ამ კოდში
         '@todo' => [
 
-            // which path this extension should be mounted to
+            // რომელ გზაზე უდა დადგეს ეს კონკრეტული გაფართოება
             'path' => '/todo',
 
-            // which controller to mount
+            // რომელი კონტროლერი უნდა მოებას
             'controller' => 'Pagekit\\Todo\\Controller\\TodoController'
         ]
     ],
@@ -154,24 +156,26 @@ To use this controller, we need to autoload our namespace and mount the controll
     // ...
 ```
 
-You are now able to access the new controller at the url `<pagekit_path>/admin/todo`. Note how this URL is generated from four parts:
+ამის მერე იხსნება წვდომა ახალ კონტროლერზე, რომელიც არის შემდეგ მისამართზე `<pagekit_გზა>/admin/todo`.
 
-1. `<pagekit_path>` URLs always start from your url
-1. `@Access(admin=true)` resulted in an admin url `/admin`
-2. The controller is mounted as `/todo`
-3. The `indexAction` is the default route at that url.
+შენიშვნა: როგორ იქმნება ეს მისამართი ოთხი ნაწილისაგან:
 
-If you cannot access your route, [clear the cache](http://pagekit.com/docs/user-interface/system#cache). Pagekit caches routes for better performance.
+1. `<pagekit_path>` ყველა URL-ი იწყება საიტის ძირითადი url-დან
+2. `@Access(admin=true)` უერთებს ადმინისტრატორის url-ს `/admin`
+3. კონტროლერი ებმება როგორც  `/todo`
+4. `indexAction` არის ავტომატური მარშუტი ამ  url-თვის.
 
-### Debug toolbar
+თუ შეფერხდა მარშუტთან წვდომა, უნდა [გავასუფთაოთ კეში](http://pagekit.com/docs/user-interface/system#cache). უკეთესი წარმადობისათვის Pagekit-ი ახდენს მარუტების კეშირებას.
 
-To see all registered routes during development, it is useful to enable the *Debug Toolbar* in Pagekit's system settings. The toolbar appears at the bottom of your screen and shows all registered routes, amongst other useful information.
+### Debug ინსტრუმენტების პანელი
 
-Remember to turn this off for a live website.
+იმისათვის, რომ ვნახოთ ყველა მარშუტი პროგრამირების პროცესში, უნდა ჩაირთოს *Debug ინსტრუმენტების პანელი* Pagekit-ის სისტემური პარამეტრებიდან. ინტრუმენტების პანელი იკავებს ეკრანის ქვედა ზოლს და მაში აისეხება ყველა რეგირტრირებული მარშუტი და რიგი სხვა სასარგებლო ინფორმაცია.
 
-### Adding a menu item
+არ აგამოგრჩეთ ამ ინსტრუმენტის გამორთვა ცოცხალი ვებსაიტისათვის.
 
-To add menu items use the `menu` property in your module definition. Add the following to the `index.php`.
+### მენიუს პუნქტის დამატება
+
+მენიუს პუნქტის დასამატებლად მოდულის აღწერაში უნდა გამოიყენოთ თვისება `menu`. დავამატოთ შემდეგი `index.php` ფაილში.
 
 ```
 // ...
@@ -186,17 +190,17 @@ To add menu items use the `menu` property in your module definition. Add the fol
 // ...
 ```
 
-Refresh the Pagekit backend and you will see a new menu item which links to the `@todo` route.
+გავაახლოთ (დავარეფრეშოთ)  Pagekit-ის ბექენდი და დავინახავთ ახალ მეინუს ბმულს `@todo`.
 
-## Step 3: View rendering and module config
+## ნაბიჯი 3: ხედის (წარმოდგენის view) რენდერინგი და მოდულის კონფიგურაცია
 
-<p class="uk-article-lead">In the past steps, we have looked at the basics of modules and routing. However, our first controller only returned simple strings. In this step, let us look at actual view rendering.</p>
+<p class="uk-article-lead">წინა ნაბიჯებით გავიარეთ მოდულების და მარშუტიზაციის საფუძვლები. ამის მიუხედავათ, ჩვენი პირველი კონტროლერმა დაგვიწერა მხოლოდ ერთი მარტივი სტრიქონი. შემდეგ ეტაპზე განვიხილოთ ხედის ფაქტიური რენდერინგი.</p>
 
-<a href="https://www.youtube.com/watch?v=EwCAtxcsz18&index=3&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">Watch this step as a video</a>
+<a href="https://www.youtube.com/watch?v=EwCAtxcsz18&index=3&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto" class="uk-button">ვნახოთ ნაბიჯის ვიდეო</a>
 
-### Render a view from a controller action
+### ხედის რენდერი კონტროლერის მოქმედებით
 
-To pass parameters to the view renderer, a controller action returns a PHP array. The reserved key `$view` holds parameters for the view renderer, i.e. the `name` of the view file to render.
+იმისათვის,რომ წარმოდგენას (ხედს - View) გადაეცეს პარამეტრები, კონტროლერის ექშენ-მეთოდი აბრუნებს PHP მასივს. რეზერვირებული გასაღები  `$view` შეიცავს პარამეტრებს ვიზუალური წარმოდგენის საშუალებისათვის, ანუ გამოსახვის ფაილის `სახელს`.
 
 ```
 public function indexAction()
@@ -211,7 +215,7 @@ public function indexAction()
 }
 ```
 
-The rendered view file can be a plain PHP template. Simple parameters (i.e. `message`) are available as PHP variables (i.e. `$message`).
+წარმოდგენის რენდერ ფაილი არის მარტივი PHP შაბლონი. მარტივი პარამეტრები (ისეთი, როგორც `message`) ხელმისაწდომია PHP ცვლადების სახით (იგივე `$message`).
 
 `packages/pagekit/todo/views/admin/index.php`:
 
@@ -220,11 +224,11 @@ The rendered view file can be a plain PHP template. Simple parameters (i.e. `mes
 ```
 
 
-### Resource shorthands
+### რესურსების შემოკლება
 
-Instead of referencing the full path to a file, we can use a shorthand syntax. `packages/pagekit/todo/views/admin/index.php` turns into `todo:views/admin/index.php`. This is faster to type and nicer to read.
+იმის მაგივრად, რომ ვწეროთო ფაილის მთლიანი გზა, შეგვიძლია ვისარგებლოთ შემოკლებული სინტაქსით. `packages/pagekit/todo/views/admin/index.php` გამიოისახება ` todo:views/admin/index.php`. ეს უკეთ იბეჭდება და იკითხება.
 
-You can register shorthands with a target path in your `index.php`. In this example we want to point `todo:` to the current path of the `index.php`.
+შემოკლების რეგისტრაცია მიზნობრივი მისამართით ხდება ფაილში  index.php. ამ მაგალითში `todo:`-თი მივუთითებთ `index.php`-ს მიმდინარე მისამართზე.
 
 ```
 'resources' => [
@@ -232,9 +236,9 @@ You can register shorthands with a target path in your `index.php`. In this exam
 ],
 ```
 
-### Module config
+### მოდულის კონფიგურირება
 
-A module can come with a configuration array to hold any kind of settings. We can use this as a simple storage for our TODO items.
+მოდული შესაძლებელია მოიცეს ნებიმიერი პარამეტრების შესანახ კონფიგურაციის მასივის სახით. ჩვენს შემთხვევაში შეგვიძლია გამოვიყენოთ, როგორც მარტივი საყობი ჩვენი TODO ელემენტებისათვის.
 
 ```
 'config' => [
@@ -244,7 +248,10 @@ A module can come with a configuration array to hold any kind of settings. We ca
 ],
 ```
 
-From the controller, we can access this configuration as a property of the module instance.
+
+
+
+კონტროლერიდან ამ კონფიგურაციას შესაძლებელია მივწვდეთ როგორც მოდულის ეგზეპლიარის პარამეტრებს.
 
 `src/Controller/TodoController.php`:
 
@@ -259,14 +266,16 @@ use Pagekit\Application as App;
 // ...
 ```
 
-We can store changes to the module config in the database. The changes from the default module config are merged with the stored changes so that we always have a valid configuration available in the controller.
+Мы можем сохранить изменения в конфигурации модуля в базе данных. Изменения из конфигурации модуля по умолчанию объединяются с сохраненными изменениями, поэтому в контроллере всегда есть действительная конфигурация.
+
+ჩვენ შეგვიძლია შევინახოთ მონაცემთა ბაზაში მოდულის კონფიგურაციაში შეტანილი ცვლილებები. მოდულის კონფიგურაციის ცვლილებები ერთიანდება შენახულ ცვლილებებთან, ამიტომ კონტროლერში ყოველთვის იქნება ნამდვილი კონფიგურაცია.
 
 ```
-// modifying the module config
+// მოდულის კონფიგურაციის ცვლილება
 App::config('todo')->set('entries', $entries);
 ```
 
-## Step 4: Using Vue.js in a Pagekit extension
+## ნაბიჯი 4: Using Vue.js-ის გამოყენება Pagekit-ის გაფართოებაში
 
 <p class="uk-article-lead">When building your own screens for the admin area, you can use any library you are used to. But as Pagekit comes with Vue.js included, it makes sense to look into it and see if it's the right choice for you as well. In this step, we will be introducing the basic concepts of working with Vue.js inside Pagekit.</p>
 
