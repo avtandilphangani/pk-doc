@@ -14,7 +14,6 @@
 <li><a href="#the-completed-example">დასრულებული მაგალითი</a></li>
 </ol>
 
-[ნაბიჯი 2: მარშუტიზაცია და კონტროლერი](ნაბიჯი-2-მარშუტიზაცია-და-კონტროლერი)
 
 ინგლისურ ენაზე ხელმისაწვდომია აგრეთვე ვიეოების სერია [Youtube playlist with all screencasts](https://www.youtube.com/playlist?list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto).
 
