@@ -266,8 +266,6 @@ use Pagekit\Application as App;
 // ...
 ```
 
-Мы можем сохранить изменения в конфигурации модуля в базе данных. Изменения из конфигурации модуля по умолчанию объединяются с сохраненными изменениями, поэтому в контроллере всегда есть действительная конфигурация.
-
 ჩვენ შეგვიძლია შევინახოთ მონაცემთა ბაზაში მოდულის კონფიგურაციაში შეტანილი ცვლილებები. მოდულის კონფიგურაციის ცვლილებები ერთიანდება შენახულ ცვლილებებთან, ამიტომ კონტროლერში ყოველთვის იქნება ნამდვილი კონფიგურაცია.
 
 ```
@@ -277,13 +275,13 @@ App::config('todo')->set('entries', $entries);
 
 ## ნაბიჯი 4: Using Vue.js-ის გამოყენება Pagekit-ის გაფართოებაში
 
-<p class="uk-article-lead">When building your own screens for the admin area, you can use any library you are used to. But as Pagekit comes with Vue.js included, it makes sense to look into it and see if it's the right choice for you as well. In this step, we will be introducing the basic concepts of working with Vue.js inside Pagekit.</p>
+<p class="uk-article-lead">ადმინ პანელისათმვის საკუთარი სკრინების შესაქმნელად შესაძლებელია ნებისმიერი ბიბლიოთეკის გამოყენება შესაძლებელია, თუმცა იმის გამო რომ Pagekit-ი მოგვეწოდება უკვე ჩაშენებული Vue.js ტექნოლოგიით, სასურველი და სასარგებლო იქნება მისი შესწავლა და გამოყენება. ამ განყოფილებაში შესაძლებელია Vue.js-ის პრინციპებთან და საფუძვლებთან გაცნობა inside Pagekit-ის შიგნით.</p>
 
-<a href="https://www.youtube.com/watch?v=3gPGyhTroSA&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto&index=4" class="uk-button">Watch this step as a video</a>
+<a href="https://www.youtube.com/watch?v=3gPGyhTroSA&list=PL2rU5GxE-MQ7aYIcxTmDh4-BTHRM-9lto&index=4" class="uk-button">ამ ნაბიჯის ნახვა ვიდეოში</a>
 
-### 1. Passing data to JavaScript
+### 1. JavaScript-ში მონაცემთა გადაცემა
 
-In the past posts we have seen how data can be accessed in PHP controllers. To use this data in JavaScript, use the `$data` keyword to pass PHP arrays to the view renderer. Pagekit will automatically convert this to a JSON representation and render it in the head section of the generated HTML.
+სხვა სტატიებში ჩვენ ვნახეთ, თუ როგორ უნდა მივწვდეთ მონაცემებს  PHP კონტროლერებში. ამ მონაცემების JavaScript-ში გადასაცემად დამოიღენება კოდური ტერმინი `$data` PHP მასივის გადასაცემად ვიზუალური წარმოდგენის გარემოში. Pagekit-ი ამ წარმოდგენას ავტომატურად გადააკეთებს JSON წარმოდგენაში და გამოსახავს მას დაგენერირებული HTML-ის სათაურის განყოფილებაში.
 
 
 ```
@@ -304,20 +302,21 @@ public function indexAction()
 }
 ```
 
-This will render the following in your `<head>` section.
+ეს შემდეგნაირად გამოისახება ჩვენი გვერდის  `<head>` სექციაში.
 
 ```
 <script>var $data = {"entries": [{"message":"Buy milk","done":false},{"message":"Drink coffee","done":true}] };</script>
 ```
 
 
-### 2. Combine view and model
+### 2. გამოსახვის და მოდელის კომბინირება
 
-The ViewModel is a `Vue` instance that syncs the data from your model with the interface of your view. This is called *reactivity* and is one of the key features of Vue. Used correctly, this helps to keep your JavaScript components small and readable.
+ViewModel - ეს არის  `Vue`-ს ეგზეპლიარი, რომელიც უზრუნველყოფს მონაცემების სინხრონიზაციას ჩვენი მოდელიდან გამოსახვის ინტერფეისში. ამას ჰქვია *რეაქტიულობა* და წარმოადგენს Vue-ს ერთერთ ძირეულ განსაკუთრებულობას. სწორი გამოყენების შემთხვევაში ის გვეხმარება, რომ  ჩვენი JavaScript კომპონენტები იყოს პატარა და მოხერხებულად წასაკითხი.
 
-You can attach the `Vue` instance to a DOM element (`el: '#todo'`). The model will be whatever you pass to the `data` parameter. To use data from Pagekit, take the global `window.$data` object that your view has rendered.
+ჩვენ შეგვიძლია დავუერთოთ `Vue`-ს ეგზემპლიარი DOM (` el: '# todo'`) ელემენტს. მოდელი იქნვება ის, რასაც გადავცემთ  `data` პარამეტრს. Чтобы использовать данные из Pagekit-დან მონაცემების გამოყენებისათვის, უნდა ავიღოთ возьмите глобальный объект `window.$Data` გლობალური ელემენტი, რომელიც გამოიტანს ჩვენს გამოსახვას.
 
-Any `methods` you create can be called from your template. We will create the template markup in the next step.
+ნებისმიერი ჩვენს მიერ შექმნილი `methods`, შესაძლებელია გამოძახებული იქნას ჩვენი შაბლონიდან. შაბლონის დაკაბადონებას გავაკეთებთ შემდეგ ნაბიჯზე.
+
 
 ```
 
@@ -358,29 +357,30 @@ $(function(){
 });
 ```
 
-### 2. Markup for Vue
+### 2. Vue-ს დაკაბადონება
 
-From PHP, we still render the view file `views/admin/index.php`. In here, we include the required JavaScript files. To make Vue available in your script, add a dependency to `vue` as a third parameter.
+
+PHP-დან გამოსახვის  `views/admin/index.php` ფაილს ვარენდეებთ ჩვეულებრივისამებრ. აქ ვუერთებთ აუცილებელ JavaScript ფაილს. სკრიპტში Vue-ს ხელმისაწვდომობისათვის მესამე პარამეტრად ვუმატებთ დამოკიდებულებას `vue`.
 
 ```
 <?php $view->script('todo', 'todo:js/todo.js', 'vue') ?>
 ```
 
-In your HTML, include the DOM element that the Vue instance is looking for (`<div id="todo"></div>`). Inside the element, you can use Vue directives. Directives are certain keywords that tell Vue what to do with the element.
+В ваш HTML-ში ვრთავთ  включите элемент DOM ელემენტს, რომელსაც მოძებნის Vue ეგზეპლიარი (`<div id =" todo "> </ div>`). ამ ელემენტის შიგნით შესაძლებელია Vue დირექტივების გამოყენება. დირექტივა - ეს არის განსაზღვრული სიტყვა გასაღები, რომელიც აგებინებს Vue-ს, რა გაუკეთოს ელემენტს.
 
 ```
-<p v-if="entry.done">This will be displayed if the item has been done.</p>
+<p v-if="entry.done">ეს გამოიყახება მაშინ, როდესაც ელემენტი იქნება დასრულებული.</p>
 ```
 
-With `@click` you can bind to the click event and call methods of your view model.
+`@click`-ით შეგვიძლია მივებათ click მოვლენას და გამოვიძახოთ მეთოდები წარმოსახვის მოდელიდან.
 
-To output values from your model, you can use curly braces (`{{ entry.message }}`). Pagekit provides a `trans` filter which will replace the string with a translated alternative if there is one present for the selected locale.
+მოდელიდან მნიშვნელობების გამოსატანად უნდა ვისარგებლოთ ფიგურული ფრჩხილებით (`{{entry.message}}`). Pagekit წარმოგვიდგენს  `trans` ფილტრს, რომელიც წარმოსახვის სტრიქონს შეცვლის ალტერნატიულით, თუ ამორჩეული ლოკალისათვის ძირეულ კატალოგში არსებობს თარგმანი.
 
 ```
 {{ 'Save' | trans }}
 ```
 
-This is how a simple view might look like.
+აი ასე შეიძლება, რომ გამოიყურებოდეს უმარტივესი წარმოსახვა (view).
 
 ```
 <!-- packages/pagekit/todo/views/admin/index.php -->
@@ -402,11 +402,11 @@ This is how a simple view might look like.
 </div>
 ```
 
-### Learn more about Vue
+### ვისწავლოთ მეტი Vue-ს შესახებ
 
-Vue.js is a powerful library that makes it easy to build reactive web interfaces. To learn more, checkout the [official guide](http://vuejs.org/guide/). We can also highly recommend the Laracasts [videos on Vue.js](https://laracasts.com/series/learning-vue-step-by-step). Both are great places for an overview of what Vue can do, either in written form or as videos.
+Vue.js - მძლავრი ბიბლიოთეკაა, რომელიც საშუელებას იძლევა ადვილად შევქმნათ რეაქტიული ვებ-ინტერფეისები. მეტი ინფორმაციისათვის უნდა გავეცნოთ [ოფიციალურ სახლმძღვანელოს] (http://vuejs.org/guide/). ასევე სასარგებლო იქნება  [ვიდეო  Vue.js-ზე] (https://laracasts.com/series/learning-vue-step-by-step). ერთიც და მეორეც კარგი საშუალებაა წერილობით თუ ვიდეო ფორმატში, იმისა, გავარჩიოთ რა შეუძლია გააკეთოს Vue-ს.
 
 <a id="complete"></a>
-## The completed example
+## დასრულებული მაგალითი
 
-In the completed example, we have implemented the actual saving to the backend and cleaned up the source code. It combines all previous steps where we described how to create a simple Todo extension. The result is [available on Github](https://github.com/pagekit/example-todo) for you to fiddle around with.
+მოცემულ მაგალითში რეალიზებულია რევერის მხარის ნაწიის ფაქტიური შენახვა, ყველაფერი მოცემულია სუფთა პირველად კოდში. ის აერთიანებს ყველა წინა ნაბიჯს, სადაც ჩვენ აღვწერეთ, როგორ უნდა შევქმნათ მარტივი გაფართოება სახელად  Todo. ეს  ყველასთვის [ბელმისაწვდომია Github-ზე] (https://github.com/pagekit/example-todo).
