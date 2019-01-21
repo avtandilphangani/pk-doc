@@ -1,112 +1,117 @@
-# How to develop a Pagekit theme
+# როგორ დავაპროგრამოთ Pagekit-ის თემა 271123
 
-<p class="uk-article-lead">In this tutorial you will learn how to develop your own theme from our Hello Theme blueprint. You will find out about the theme structure and follow the essential steps to add new positions and options.</p>
+<p class="uk-article-lead">ამ ინსტრუქციაში აღვწერთ, როგორ დავაპროგრამოთ საკუთარი თემა პროექტ  Hello-ს მაგალითზე. გავარჩევთ თემის სტრუქტურას და  საჭირო ნაბიჯებს, ახალი პოზიციების და ოპციების დასამატებლად.</p>
 
-**Note** The [completed theme](https://github.com/pagekit/example-theme) can be found on Github.
+**ყურადღება** [დასრულებული თემა](https://github.com/pagekit/example-theme) ხელმისაწვდომია Github-ზე.
 
-## Getting started
+## დასაწყისი
 
-For this tutorial, we assume you have a running Pagekit installation on a local server environment. If that is not the case, [download](https://pagekit.com/download) a Pagekit installation package and quickly [install](../getting-started/installation.md) it. Then login to the admin area and have a look at the Theme section of the integrated Marketplace.
+ამ სახელძღვანელოში იგულისხმება, რომ გვაქვს  Pagekit-ის მუშა ვარიანტი ლოკალური სერვერის გარემოში. თუ არა, უნდა [ჩამოვტვირთოთ] (https://pagekit.com/download) Pagekit-ი და [დავაყენოთ] (../ Getting-Start / Installation.md). შემდეგ შევიდეთ ადმინ პანელში და შევხედოთ ინტეგრირებული მაღაზიის „თემების“ განყოფილებაში.
 
-The Pagekit Marketplace features our [Hello Theme](https://pagekit.com/marketplace/package/pagekit/theme-hello), a blueprint for developing themes, including code examples and a general foundation to help you get started.
+Pagekit-ის მაღაზიაში არის ჩვენი [Hello Theme] (https://pagekit.com/marketplace/package/pagekit/theme-hello) თემებთან სამუშაო პროგრამა თავისი მაგალითებით და საერთო საფუძვლებით, რომოლიც დაგვეხმარება დავიწოთ მუშაობა.
 
 <figure class="uk-thumbnail">
     <img src="assets/tutorial-theme-hello-plain.png" alt="Hello Theme unstyled">
-    <figcaption class="uk-thumbnail-caption">Hello theme doesn't provide any styling, but gives you a good starting point to develop your own theme.</figcaption>
+    <figcaption class="uk-thumbnail-caption">Hello თემა არ წარმოადგენს არანაირ სტილს, მაგრამ გვაძლევს მყარ საწყის წერტილს საკუთარი თემის შესამუშავებლად.</figcaption>
 </figure>
 
-First of all install the theme from the Pagekit marketplace and have a look at the overall file structure. When installed, the *Hello* theme is located in `packages/pagekit/theme-hello`. If you develop your own themes in the future, we recommend to install a simple theme on the side for reference, like the default [Theme One](https://pagekit.com/marketplace/package/pagekit/theme-one). That way you can compare structural elements and get some inspiration. For this tutorial though, we only need Hello theme.
+პიველ რიგში, Pagekit-ის მაღაზიიდან დავაყენოთ თემა და შევხედოთ ფაილების საერთო სტრუქტურას. После установки თემა *Hello* დაყენების შემდეგ განთავსდება `packages/pagekit/theme-hello` პაპკაში. თუ სამომავლოდ ჩვენ უნდა შევიმუშაოთ საკუთარი თემა, ჩვენი რეკომენდაციია იქნება კიდევ დავაყენოთ უბრალო თემა, მაგალითად [Theme One] (https://pagekit.com/marketplace/package/pagekit/theme-one). ასე ჩვენ გვექნება საშუალება შევადაროთ სტრუქტურული ელემენტები. ამ გაკვეთილისთვის კი ჩვენთვის საკმარისია მხოლოდ თემა Hello.
 
-## Structure
-Let's take a look at some of the central files and folders that you will deal with when developing your own theme.
+## სტრუქტურა
+
+განვიხილოთ ის ცენტრალური ფაილები და პაპკები, რომელემბთანაც აუცილებელია შეხება საკუთარი თემის შემუშავების შემთხვევაში.
 
 ```txt
 /css
-  theme.css               // skeleton css with pre-defined classes
+  theme.css               // css-ის ჩონჩხი განსაზღვრული კლასებით
 /js
-  theme.js                // empty file for your scripts
+  theme.js                // ცარიელი ფაილი ჩვენი სკრიპტებისათვის
 /views
-  template.php            // renders the theme's output; logo, menu, main content, sidebar and footer positions are available by default
-composer.json             // package definition so that Pagekit recognizes the theme
-image.jpg                 // preview screenshot
-index.php                 // the central theme configuration
-CHANGELOG.md              // changes of current and previous versions
-README.md                 // contains basic information
+  template.php            // თემების გამოსახვის რენდერი; ლოგო, მენიუ, ძირეული კონტენტი, გვერდითა პანელი და სქოლიოს პოზიციები ჩართულია ავტომატურად
+composer.json             // პაკეტის დეფინიცია, საიდანაც Pagekit-ი გაარჩევს თამას
+image.jpg                 // თემის სკრიშოტი
+index.php                 // თემის ცენტრალური კონფიგურაცია
+CHANGELOG.md              // შეტანილი ცვლილებების ნუსხა
+README.md                 // შეიძცავს საბაზისო ინფორმაციას
 ```
 
-### Rename your theme
+### გადარქმევა საკუთარ თემად
 
-If you simply change the files of Hello theme, any Marketplace updates to the theme will overwrite your changes. Also, you will probably want to give the theme your own custom name. If you decide to upload the theme to the marketplace, you even need to name it differently. This requires three simple steps:
+Hello თემის ფაილების უბრალოდ შეცვლა გამოიწვევს იმას, რომ ნებისმიერი ამ თემის განახლება მაღაზიაში გადააწერს ფაილებს და ჩვენს მიერ შეტანილი ცვლილებები დაიკარგება. ამის გარდა, აბათ სასურველია საკუთარ თემას ერთქვას შესაბამისი საკუთარი სახელი. ამასთან, თუ სურვილი გვაქვს, იმის, რომ ეს თემა ავტვირთოთ საეთო მაღაზიაში, მაშინაც მას უნდა მივცეთ უნიკალური სახელი. ყოველივე ეს მოიცავს სამ მარტივ ნაბიჯს:
 
-1. Copy all files from `packages/pagekit/theme-hello` to `packages/your-name/your-theme` (you will need to create these folders).
-2. Open `composer.json` and replace `"name": "pagekit/theme-hello",` with `"name": "your-name/your-theme"`. ALso change `"title": "Hello"` to `"title": "Your theme"`.
-3. Open `index.php` and replace `'name' => 'theme-hello'` with `'name' => 'your-theme'`.
+1. დავაკოპიროთ ყველა ფაილი `packages/pagekit/theme-hello`-დან to `packages/ჩვენი-სახელი/ჩვენი-თემა` პაპკაში (ჩვენ დაგვჭირდება ამ შესაბამისი პაპკების შექმნა, რა თქმა უნდა ლათინური სიბოლოებით).
+2. გავხსნათ `composer.json` და შევთცვალოთ `"name": "pagekit/theme-hello",` ასე `"name": "ჩვენი-სახელი/ჩვენი-თემა"`. ასევე შევცვალოთ `"title": "Hello"` to `"title": "ჩვენი თემის სახელი"`.
+3. გავხსნათ `index.php` და შევცვალოთ `'name' => 'theme-hello'` ასე `'name' => 'ჩვენი-თემა'`.
 
-Out of simplicity, the rest of the tutorial will still call it `theme-hello` in the examples.
+ამ სახელმძღვანელოში, შემდგომ სიმარტივისათვის მაგალითებში დავტოვებთ `theme-hello`-ს სახელით.
 
 ### CSS
-Hello theme doesn't contain any styles. The included `css/theme.css` file lists all CSS classes that are rendered by the Pagekit core extensions without additional styling. You can add your own CSS to these classes.
 
-The Pagekit admin interface and the Pagekit default themes are built with the [UIkit front-end framework](http://getuikit.com/). So you might want to consider using it for your project as well. In the following example we will be building our theme using UIkit. If you use another framework or no framework at all, the basic approach of including CSS is similar.
+Hello Theme არ შეიცავს არანაირ სტილებს. ჩართული ფაილი `css/theme.css` CSS კლასების სიას, რომელებიც აისახება которые отображаются базовыми расширениями Pagekit-ის ძირითადი გაფართოებების მიერ დამატებით სტილების გარეშე. ჩვენ შეგვიძლია ჩავამატოთ საკუთარი  CSS  კლასები.
 
-There are many possible ways to set up your theme's file structure. We can recommend two approaches here. One is the "classic" way of including plain CSS. The second one is more complex to set up initially, but allows for far more flexibility.
+Pagekit-ის ადმინ პანელი და თანმოყოლილი თემები იმთნება [UIkit ინტერფეისული] (http://getuikit.com/) გარემოს დახმარებით. ჩვენც ასევე შეგვიძლია გამოვიყენოთ მისი შესაძლებლობები საკუთარი პროექტის შესასრულებლად. შემდეგ მაგალითებშიც თემას ავაწყობთ UIkit-ის გამოყენებით. თუ თქვენ გამოიყენებთ სხვა ფრეიმოვრკს ან არ გსურთ რაიმე ფრეიმვორკის გამოყენება,  CSS-ის ჩართვის პროცედურა მაინც ანალოგიურია.
 
-#### The simple way: Include plain CSS files
+არის მრავალი შესაძლო ხერხი, რომლითაც შეიძლება მოვაწყოთ ჩვენი თემის ფალების სტრუქტურა. აქ ჩვენ რეკომენდაციას გავუწევთ ორ მიდგომას. პირველი მათგანი არის „კლისიკური“ ჩართვა უბრალო  CSS ფაილისა. მეორე ვარიანტი უფრო რთულია პირველ ეტაპზე მაგრამ უზრუნველყოფს დიდ მოქნილობას.
 
-Go to the [UIkit website](http://getuikit.com/), download the latest release and unpack it. UIkit comes with three themes: Default, Gradient and Almost Flat. To include the Default theme, copy the `css/uikit.min.css` file from the UIkit package and paste it into the `theme-hello/css/` folder of your theme.
+#### მარტივი მეთოდი: მარტივი  CSS ფაილების ჩართვა
 
-To make sure the file is loaded by Pagekit, open the main layout file of the theme which is located at `theme-hello/views/template.php`.
+გადავიდეთ [UIkit ვებსაიტზე](http://getuikit.com/), ჩამოვტვირთოთ უახლესი ვერსია და გავხსნათ. UIkit წამოდგენილია სამი ვარიატთით: Default, Gradient და Almost Flat. Default თემის ჩასართველად უნდა დაკოპირდეს `css/uikit.min.css` ფაილი და ჩაისვას `theme-hello/css/` პაპკაში.
 
-In the `<head>` section of this layout file, we see that one CSS file is included already.
+იმაში დასარწმუნებლად, რომ ფაილი ჩაიტვირთა Pagekit-ის მიერ, გავხსნათ შაბლონის ფაილი `theme-hello/views/template.php`.
+
+ `<head>` სექციაში ვხედავთ, რომ / CSS ფაილი უკვე ჩართულია.
 
 ```
 <?php $view->style('theme', 'theme:css/theme.css') ?>
 ```
 
-Now add another line to add the UIkit CSS. Make sure to add it **above** the line that is already present, so that it looks as follows.
+დავამატოთ ახალი ხაზი  UIkit CSS ფაილის დასამატებლად. ეს უნდა დაემატოს ძირეული ფაილის **ზემოთ** , როგორც ქვემოთაა ნაჩვენები.
 
 ```
 <?php $view->style('custom-uikit', 'theme:css/uikit.min.css') ?>
 <?php $view->style('theme', 'theme:css/theme.css') ?>
 ```
 
-That's it, your theme now contains UIkit's CSS. To add your own CSS rules, simply edit `theme-hello/css/theme.css`.
+ამის შემდეგ თემა შეიცავს  UIkit-ის CSS-ს. ჩვენი საკუთარი CSS წესების დასამატებლად მარტივად უნდა დავარედაქტირთო `theme-hello/css/theme.css`.
 
 <figure class="uk-thumbnail">
     <img src="assets/tutorial-theme-basic-css.png" alt="Default UIkit styling">
-    <figcaption class="uk-thumbnail-caption">Adding the CSS from UIkit will add default styling to the rendered markup. To actually make it pretty, we also need to add some classes to the markup, customize the default UIkit style and maybe add our own CSS styling</figcaption>
+    <figcaption class="uk-thumbnail-caption">AДобавление CSS из UIkit-დან CSS-ის დამატება გვაძლევს ძირეულ სტილებს გამოსახვით დაკაბადონებაში. იმისათვის, რომ ეს გავაკეთოთ სინამდვილეში ლამაზად, ჩვენ დაგვჭირდება რამოდენიმე კლასის დამატება,  UIkit-სტილის დაწყობა და შესაძლოა ჩვენი საკუთარი CSS-ის დამატება</figcaption>
 </figure>
 
 
-#### The advanced way: Setup with Gulp and LESS
+#### დამატებითი გზა: Gulp-ის და  LESS-ის გამოყენება
 
-In the previous section we have seen how easy it is to add plain CSS files to your theme. If you have experience with building websites, you are probably familiar with more flexible ways of styling your content. A good example for this is using a CSS pre-processor like [LESS](http://lesscss.org/). This allows you to use things such as variables, which make your code easier to read and manage.
+წინა თავში შევხედეთ, თუ რა მარტივია თემაში მარტივი  CSS-ფაილების დამატება. თუ თქვენ გაქვთ ვებ-საიტების კეთების გამოცდილება,მაშინ თქვეთვის სავარაუდოთ ცნობილი უნდა იყოს უფრო მოქნილი საშუალებები კონტენტის სტილიზაციისათვის. ამის კარგი მაგალითია  CSS-ის პრეპროცესორის გამოყენება, ისეთი როგორიცაა  [LESS-ი] (http://lesscss.org/). იგი მოგვცემს საშუელებას გამოვიყენოთ ცვლადები, რომლებიც აადვილებს კითხვას და ჩვენი კოდის მართვას.
 
-When using UIkit, this has the great advantage that you can simply modify a variable to apply global changes, for example altering the primary theme color.
+UIkit-ის გამოყენებით ეს გვაძლებნ დიდ უპირატესობას: გლობალური ცვლილებების შესატანად საკმარისი იქნება ცვლადის მნიშვნელობის შეცვლა, მაგალითად, შევცვალოთ თემის ძირითადი ფერი.
 
-To comfortably work with the LESS pre-processor, you should have a few tools installed and available on your command line: *npm*, *gulp* and *bower*. If you do not have them installed, do a quick Google search, there are plenty of tutorials available online.
+Для комфортной работы с препроцессором პრეპროცესორ LESS-თან კომფორტული მუშაობისათვის ტერმინალში უნდა დავაყენოთ და მივიღოთ წვდომა რამოდენიმე ინსტრუმენტზე: *npm*, *gulp* და *bower*. თუ ისინი არ გვიყნია, მოვძებნოთ ისინი Google-ში, სადაც მრავლადაა ამ თემაზე სასწავლო მასალა.
 
-There are a number of possible file structure setups. In the following passage we suggest the structure that is also used for the official Pagekit themes. While it might look like many steps when you create a theme for the first time, in our experience this setup allows for well structured code, easy UIkit customizations and a comfortable way to keep UIkit up to date using Bower.
+ზემოთ ნახსენები ლოკალური სერვერის გარემოსთვის რეკომენდაციას ვაძლევ ლინუქს პლატფორმას, სადაც ყველა ეს ინსტრუმენტი ადაპტირებულია მშობლიურ დონეზე (ა. ფ)
 
-#### Step 1
+არსებობს ფაილური სისტემის რამოდენიმე შესაძლო მოწყობა. შემდეგ ნაწყვეში ჩვენ გვაქვს შემოთავაზება სტრუქჭტურის, რომელიც ასევე გამოიყენება Pagekit-ის ოფიციალურ თემებში. შესაძლოა, რომ თემის შექმნის პირველ ეტაპზე ეს მოგვეჩვენოს, რომ ეტაპები ბევრია, მაგრამ გამოცდილებამ აჩვენა, რომ ეს მოწყობ საშუალებას იძლევა მივიღოთ კარგად სრუქტუირებული კოდი, UIkit-ის მარტივი მოწყობა და მარტივი მექანიზმი UIkit-ის აქტუალურ მდგომარეობის გამოყენება Bower-ის დახმარებით.
 
-In your theme, create the new files `package.json`, `bower.json`, `.bowerrc`, `gulpfile.js` and `less/theme.less`. Paste the following contents into these files. If you have named your theme differently, replace any occurences of the string `theme-hello` with your theme name.
+#### ნაბიჯი 1
 
-`package.json`. This file defines all JavaScript dependencies that are installed when running `npm install` and includes several npm packages that we will we use, for example when compiling LESS to CSS:
+ჩვენი თემის პაპკაში ვქმნით ფაილებს `package.json`, `bower.json`, `.bowerrc`, `gulpfile.js` და `less/theme.less`. ჩავსვათ ამ ფაილებში ქვემოთ მოყვანილი კონტენტი. თემის სახლი შევცვალოთ შესაბამისი ჩვენი თემის სახელით, თუ ის განსხვავებულია  `theme-hello`-გან.
+
+`package.json`. ეს ფაილი განსაზღვრავს ყველა JavaScript კავშირებს, რომელბიც ყენდება `npm install` ბრძანებით და შეიცავენ რამოდენიმე npm პაკეტს, რომელებიც გამოიყენება, მაგალითად  LESS-ის  CSS-ში კომპილაციისათვის:
 
 ```
 {
     "name": "theme-hello",
 	"devDependencies": {
 	     "bower": "*",
-	     "gulp": "*",
+	     "gulp": "3.*.*", // გალპის ბოლო ვერსია ჩემთვის დაუძლეველ შეცდომას აგდებ, ამიტომ ვაყენებ იმას, რაც მუშაობს
 	     "gulp-less": "*",
 	     "gulp-rename": "*"
 	 }
 }
 ```
 
-`bower.json` tells bower to fetch the newest release of UIkit. That way you can always run `bower install` to fetch the current LESS source files from UIkit:
+
+`bower.json` bower-ს ატყობინებს, რომ მან ჩათოტვირთოს უახლესი  UIkit-ის ვერსია. აგვარად, ჩვენ შეგვიძლია გავუშვათ  `bower install`, იმისათვის რომ UIkit-დან მივიღოთ მიმდინარე წყარო LESS ფალები:
 
 ```js
 {
@@ -118,15 +123,17 @@ In your theme, create the new files `package.json`, `bower.json`, `.bowerrc`, `g
 }
 ```
 
-`.bowerrc` includes configuration settings for bower. By default, bower installs everything in a directory called `/bower_components` inside the theme directory. Simply out of preference, we change that default directory:
+`.bowerrc` შეიცავს საკონფიგურაციო მოწყობას  bower-სთვის. По умолчанию bower ავტომატურად ყველაფერს აყენებს ქვეპაპკაში `/ bower_components` თემის პაპკის შიგნით. ჩვენ ამ პაკის მდებარეობას შევცვლით სხვით:
 
 ```js
 {
     "directory": "app/assets"
 }
 ```
+**შენიშვნა** bower-ის ლოკალურად პროექტის პაპკაში მუშაობისათვის შესაძლოა დაგჭირდეთ ამის გაკეთება sudo chown -R $USER:$(id -gn $USER /home/თქვენი-იუზერი/.config
 
-`gulpfile.js` contains all tasks which we can run using Gulp. We only need a task to compile LESS to CSS. For convenience we also add a `watch` task that can be run to automatically recompile LESS when any changes to the files have been detected:
+
+`gulpfile.js` შეიცავს ყველა ამოცანას, რომლის გაშვებაც  Gulp-ის მეშვეობითაა შესაძლებელი. ჩვენ გვინდა მხოლოდ LESS-ის CSS-ში კომპილაციის ამოცანა. მოხერხებულობისათვის ჩვენ ასევე დავუთატებთ ამოცანა `watch`, რომელიც ფაილებში რაიმე ცვლილებების აღმოჩენის შემთხვევაში შეძლებს გაუშვას  LESS-ის ავტომატური პერეკომპლაცია:
 
 ```js
 var gulp       = require('gulp'),
@@ -137,7 +144,7 @@ var gulp       = require('gulp'),
 	    return gulp.src('less/theme.less', {base: __dirname})
 	        .pipe(less({compress: true}))
 	        .pipe(rename(function (file) {
-	            // the compiled file should be stored in the css/ folder instead of the less/ folder
+	            // კომპილირებული ფაილები უნდა შენახული იქნას  css/ პაპკაში ნაცვლად less/ პაპკისა
 	            file.dirname = file.dirname.replace('less', 'css');
 	        }))
 	        .pipe(gulp.dest(__dirname));
@@ -149,22 +156,23 @@ var gulp       = require('gulp'),
 
 ```
 
-`less/theme.less` is the place where you store your theme's styles. Mind that you first need to import UIkit so that it is also compiled by the Gulp task we have defined above.
+`less / theme.less` - ეს არის ადგილი, სადაც ჩვენ შევინახავთ ჩვენი თემის სტილებს. გახსოვდეთ, რომ თავიდან საჭიროა UIkit-ის იმპორტი, რათა ისიც დაშკომპილირდეს Gulp-ის მეშვეობით, ის რაც აღვწერეთ მაღლა.
 
 ```less
 @import "uikit/uikit.less";
 
-// use icon font from system
+// icon ფონტდების გამოყენება სისტემიდან
 @icon-font-path: "../../../../app/assets/uikit/fonts";
 
-// your theme styles will follow here...
+// ჩვენი თამის სტილები უნდა დაიწეროს აქ...
 ```
 
-`.gitignore` is an optional file that is useful when you manage your code using Git. In Hello theme, a version of the file already exists. You can add new entries so that it looks as follows. You probably don't want to commit the downloaded packages by bower and the generated CSS. Just make sure to include the generated CSS when you upload the theme to your server or the Pagekit Marketplace.
+
+`.gitignore` - ეს ფალი არის ოპციონალური, რომელიც სასარგებლოა, როცა ჩვენს კოდს ვმართავთ Git-ის დახმარებით.  Hello თემაში ამ ფაილის ვერსია უკვე არსებებობს. ჩვენ შეგვიძლია მას დავუმატოთ ახალი ჩანაწერები, რომ ის გამოიყურებოდეს შემდეგნარიად. ჩვენ რა თმა უნდა, არ დავაფიქსირებთ bower-ის ჩამოტვირთულ ფაილებს და დაგენერირებულ CSS-ს. დაგენერირებული CSS საყურადღებოა მხოლოდ მაშინ, როცა ჩვენს თემას ვტირთავთ საიტის სერვერზე ან  Pagekit Marketplace-ზე.
 
 ```txt
 /app/bundle/*
-/app/assets/*
+/app/assets/uikit/*
 /node_modules
 /css
 .DS_Store
@@ -172,51 +180,68 @@ var gulp       = require('gulp'),
 *.zip
 ```
 
-#### Step 2
+**შენიშვნა** მოცემული სახელმძღვანელო დაწერილია Uikit 2.x ვერსიისათვის, მე მაქვს მცდელობა ეს ყველაფერი გადავწერო 3.X ვერსიისათვის, ამიტომ შემდეგი ნაბიჯები განსხვავებულია ოფიციალური დოკუმენტაციისაგან
 
- After you have created the files above, go to the [UIkit Github repository](https://github.com/uikit/uikit), download the Zip, unpack it and find the `themes/default` folder (or one of the other themes, if you like). Note that you need the Github version for this, not the css-only version we have downloaded in the simple setup.
+#### ნაბიჯი 2
 
-![Download UIkit from Github](assets/tutorial-theme-download-uikit.png)
+ ზემოთ მითითებული ფაილების შექმნის შემდეგ После создания указанных выше файлов перейдите в [UIkit Github რეუპოზიტორიდან] (https://github.com/uikit/uikit), უნდა ჩამოვტვირთოთ Zip-ი, გავშალოთ და გადავიდეთ `themes/default` (ან რომელიმე სხვა თემაში, სურვილისამებრ). ყურადღება მივაქციოთ, რომ ამისათვის ჩვენ გვჭირდება  Github ვერსია და არა მხოლოდ  css ვერსია, რომელიც ჩვენ ჩამოვწერეთ უბრალო მოწყობისათვის.
 
-#### Step 3
+UIkit-ს  Github-იდან ვტვირთავთ bower-ის საშუალებით: bower install. მითითებისამებრ UIkit-ის 3.X ვესია ჩამოიქაჩება და დადგება app/asset/-ში, სადაც LESS ფაილები განთავსებულია uikit/src/less-ში. აქ გვაქვს ორი პაპკა /components და /theme. უკანასკნელი არის სუფთა ფაილების სტრუქტურით.
 
-Create a `/less` folder inside your theme, copy and paste the `default` theme folder in there and rename it to `/uikit`, so that it is located at `less/uikit` inside your theme folder.
+
+#### ნაბიჯი 3
+
+შევქმნათ  `/less` პაპკა ჩვენი თემის შიგნით, დავაკოპიროთ და ჩავსვათ `theme` პაპკა. ამასთან გადმოვწეროთ uikit.theme.less ფაილი, გადავარქვათ მას სახელი theme.less
+
+**შენიშვნა** ამ სახელის დარქმევა პირობითია, \*.CSS ფაილი დაკომპილირდება იგივე სახელით და ეს სახელი უნდა შევიდეს შაბლონის ფაილში სტილის სახელად. რადგან შაბლონის მაგალითში გამოყენებულია theme.css, სიმარტივისთვის ვარქმევთ theme.less-ს.
+
 
 #### Step 4
 
-The style we just copied needs to import the core UIkit LESS, so that it can be compiled successfully. To make this possible, you need to update the import path in your theme's `less/uikit/uikit.less` file. Make sure to change the import in line 4 to the following path: `@import "../../app/assets/uikit/less/uikit.less";`
+theme.less-ში სტრიქონი  @import "components/\_import.less";  შევცვალოთ @import "../app/assets/uikit/src/less/components/\_import.less";-ით.
 
-#### Step 5
+ახლა ჩვენ მზად გვაქვს უკვე მთლიანი სტრუქტურა, ../app/assets/uikit/src/less/components/ არის Uikit3-ის ავტომატური ფაილები, ხოლო theme/-ში განთავსებულია იგივე სტრუქტურის less ფაილები, რომელშიც უნდა შევიდეს ჩვენთვის საჭირო ცვლილებები. ხოლო დამატებითი, ჩვენი საკუთარი სტილები გაკეთდება theme.less-ში
 
-Open your theme in a new console tab (for example `cd pagekit/packages/theme-hello`) and run `npm install`, `bower install` and `gulp`.
+#### ნაბიჯი 5
 
-Now, that were quite a few steps. Make sure your file structure looks as follows now (plus additional theme files that were there before):
+ამ ნაბიჯზე ყველაფერი გვაქვს კომპილაციისათვის. ტერმინალში გავხსანთ ჩვენი თემის პაპკა (მაგალითისთვის `cd pagekit/packages/theme-hello`) და გავუშვით `npm install`, `bower install` and `gulp`.
+
+**შენიშვნა** აქაც მე გავაკეთე ცოტა განსხვავებულად. პირველი, npm მე დავაინსტალირე გლობალურად. `npm install -g npm`, ასევე `npm install -g gulp` `npm install -g gulp-rename`,
+`npm install -g gulp-less` და `npm install -g gulp-header` (ეს უკანასკნელი თვითონ მოითხოვა), შემდეგ `npm install -g bower`. იმისათვის, რომ bower-ს ემუშავა ლოკალურად დამჭირდა ზემოთ ნახსენები ბრძანება  sudo chown -R $USER:$(id -gn $USER, ხოლო დანარჩენი პაკეტებისათვის npm link (npm link gulp და ა. შ.). ამით მიიღწევა ის, რომ npm კომპონენტების უარავ ფაილს არ ვწერ ჩემი პროექტის პაპკაში.
+
+ახლა როდესაც გავიარეთ ეს ნაბიჯები, დავრწმუნდეთ რომ ჩვენი ფაილური სტრუქტურა გამოიყურება შემდეგნარად (პლიუს დამატებით ფალიბი, რომლებიც იყვნენ პაპკაში მანამდე)::
 
 ```
 app/
     assets/
-        jquery/    result of bower install
-        uikit/     result of bower install
+
+        uikit/                      // bower install-ის შედეგი
+              src/                    // bower install-ის შედეგი
+                  components/       // bower install-ის შედეგი
+                  theme/            // bower install-ის შედეგი
+                  uikit.less        // bower install-ის შედეგი
+                  uikit.theme.less // bower install-ის შედეგი
 css/
-    theme.css      result of gulp
+    theme.css      // gulp-ის კომპილაციის შედეგი
 less/
-    uikit/
+    theme/
         ... uikit components
-    	uikit.less
-    theme.less
-node_modules/      result of npm install
+    	theme.less   // გადარქმეული uikit.theme.less  
+
+node_modules/      // npm  install ან npm link-ის შედეგი
 .bowerrc
 bower.json
 gulpfile.js
 package.json
-... other theme files
+.gitignore
+... თემის სხვა ფაილები
 ```
 
-With this file setup in place, we have now achieved the following:
+ფაილების ასეთი მოწყობით ჩვენ მივაღწიეთ შემდეგს:
 
-- **Separation** of theme styles and UIkit customizations. Add your own styles in `less/theme.less`, customize UIkit in `less/uikit/*`
-- **Easily customize UIkit**: Every UIkit component's settings are located in its own `*.less` file. For example, to change the body font size, open `less/uikit/base.less` and change the value of `@base-body-font-size`, then re-run `gulp`. To use any of the [UIkit add-on components](http://getuikit.com/docs/components.html), open `less/uikit.less` and import the add-on's less file from the `app/assets` directory, for example for the slideshow, add the line: `@import "../../app/assets/uikit/less/components/slideshow.less";` and re-run `gulp.`
-- **Easily update UIkit**: Run `bower install` to fetch the newest version of UIkit and run `gulp` to re-compile your LESS files to CSS.
+- თემის სტილების და UIkit მოწყობის **განცალკევება**. საკუთარ სტილებს ვამატებთ "less/theme.less"-ში, UIkit-ში ცვლილებები შეგვაქვს "less/theme/"-ში
+- **UIkit-ის ადვილი მოწყობა**: UIkit-ის ყოველი კომპონენტის მოწყობა მოთავსებულია თავის საკუთარ  \*.less-ფაილში. მაგალითად, იმისათვის, რომ შევცვალოთ ძირეული შრიფტის ზომა, გავხსნათ  «less/theme/base.less» და შევცვალოთ «@base-body-font-size»-ს მნიშვნელობა, შემდეგ ისევ გავუშვათ «gulp». theme პაპკაში მოთავსებული less ფაილები არის მინიმალური, რომელიც უნდა შევცვალოთ ჩვენი თემის დიზაინის შესაბამისად. ყველა ცვლილების შედეგად გვჭირდება ხელახლა გავუშვათ `gulp`-ი. 
+- **UIkit-ის ადვილი განახლება**: გავუშვათ `bower install` და ჩამოვქაჩოთ Uikit-ის უახლესი ვერსია, შემდეგ ისევ `gulp` ჩვენი LESS ფააილების რეკომპილაციისათვის CSS-ში.
 
 
 ## Adding JavaScript
